@@ -1,34 +1,27 @@
-import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
+  updateBookingNumber,
+  setServerMessage
+} from "../actions/createBookingPageActions";
 import * as myTripAPI from "../services/myTripAPI";
+import CreateBookingPage from "../components/createBookingPage";
 
-export default function createBooking(CreateBookingPage) {
-  return class extends Component {
-    constructor(props) {
-      super(props);
-      this.handleCreateBooking = this.handleCreateBooking.bind(this);
-      this.state = {
-        message: null
-      };
-    }
+const handleCreateBooking = dispatch => bookingNumber => {
+  myTripAPI
+    .createBooking(bookingNumber)
+    .then(response => {
+      return dispatch(setServerMessage(response.msg));
+    })
+    .catch(e => {
+      console.error(e);
+    });
+};
 
-    handleCreateBooking(bookingNumber) {
-      myTripAPI
-        .createBooking(bookingNumber)
-        .then(response => {
-          this.setState({ message: response.msg });
-        })
-        .catch(e => {
-          console.error(e);
-        });
-    }
-
-    render() {
-      return (
-        <CreateBookingPage
-          {...this.state}
-          onCreateBooking={this.handleCreateBooking}
-        />
-      );
-    }
+const mapDispatchToProps = dispatch => {
+  return {
+    onChange: e => dispatch(updateBookingNumber(e.target.value)),
+    onCreateBooking: handleCreateBooking(dispatch)
   };
-}
+};
+
+export default connect(null, mapDispatchToProps)(CreateBookingPage);

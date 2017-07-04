@@ -4,18 +4,15 @@ import { eitherFunctionOrNot } from "../../utils/generalUtils";
 export default class CreateBookingPage extends Component {
   static propTypes = {
     error: React.PropTypes.object,
+    bookingNumber: React.PropTypes.string,
     onCreateBooking: React.PropTypes.func,
+    onChange: React.PropTypes.func,
     message: React.PropTypes.string
   };
 
   constructor(props) {
     super(props);
-    this.state = {
-      bookingNumber: ""
-    };
-
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleBookingNumberChange = this.handleBookingNumberChange.bind(this);
   }
 
   handleSubmit(event) {
@@ -23,12 +20,8 @@ export default class CreateBookingPage extends Component {
     const onCreateBooking = this.props.onCreateBooking;
     eitherFunctionOrNot(onCreateBooking).fold(
       () => {},
-      () => onCreateBooking(this.state.bookingNumber)
+      () => onCreateBooking(this.props.bookingNumber)
     );
-  }
-
-  handleBookingNumberChange(event) {
-    this.setState({ bookingNumber: event.target.value });
   }
 
   render() {
@@ -40,8 +33,8 @@ export default class CreateBookingPage extends Component {
             className="mytrip-content__login-form-input-field"
             name="bookingNumber"
             type="text"
-            value={this.state.bookingNumber}
-            onChange={this.handleBookingNumberChange}
+            value={this.props.bookingNumber}
+            onChange={this.props.onChange}
           />
         </div>
         <div className="mytrip-content__login-form-row">

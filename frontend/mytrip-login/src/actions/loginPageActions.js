@@ -1,5 +1,5 @@
-export const UPDATE_EMAIL = "UPDATE_EMAIL";
-export const UPDATE_BOOKING_NUMBER = "UPDATE_BOOKING_NUMBER";
+export const UPDATE_EMAIL = "loginPageActions.updateEmail";
+export const UPDATE_BOOKING_NUMBER = "loginPageActions.updateBookingNumber";
 
 export const updateEmail = value => {
   return {

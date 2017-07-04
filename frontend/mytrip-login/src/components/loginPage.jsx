@@ -1,23 +1,17 @@
 import React, { Component } from "react";
 import { eitherFunctionOrNot } from "../../utils/generalUtils";
-import * as actions from "../actions/createBookingPageActions";
 
 export default class LoginPage extends Component {
   static propTypes = {
     error: React.PropTypes.object,
+    onEmailChange: React.PropTypes.func,
+    onBookingNumberChange: React.PropTypes.func,
     inLogin: React.PropTypes.func
   };
 
   constructor(props) {
     super(props);
-    this.state = {
-      email: "",
-      bookingNumber: ""
-    };
-
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleBookingNumberChange = this.handleBookingNumberChange.bind(this);
   }
 
   handleSubmit(event) {
@@ -25,16 +19,8 @@ export default class LoginPage extends Component {
     const onLogin = this.props.onLogin;
     eitherFunctionOrNot(onLogin).fold(
       () => {},
-      () => onLogin(this.state.email, this.state.bookingNumber)
+      () => onLogin(this.props.email, this.props.bookingNumber)
     );
-  }
-
-  handleEmailChange(event) {
-    this.setState({ email: event.target.value });
-  }
-
-  handleBookingNumberChange(event) {
-    this.setState({ bookingNumber: event.target.value });
   }
 
   render() {
@@ -46,8 +32,8 @@ export default class LoginPage extends Component {
             className="mytrip-content__login-form-input-field"
             name="email"
             type="text"
-            value={this.state.email}
-            onChange={this.handleEmailChange}
+            value={this.props.email}
+            onChange={this.props.onEmailChange}
           />
         </div>
         <div className="mytrip-content__login-form-row">
@@ -56,8 +42,8 @@ export default class LoginPage extends Component {
             className="mytrip-content__login-form-input-field"
             name="bookingNumber"
             type="password"
-            value={this.state.bookingNumber}
-            onChange={this.handleBookingNumberChange}
+            value={this.props.bookingNumber}
+            onChange={this.props.onBookingNumberChange}
           />
         </div>
         <div className="mytrip-content__login-form-row">
@@ -66,6 +52,7 @@ export default class LoginPage extends Component {
           </button>
         </div>
         {this.props.error &&
+          this.props.error.message &&
           <div className="mytrip-content__error">
             {this.props.error.message}
           </div>}

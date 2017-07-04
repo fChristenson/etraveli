@@ -29,5 +29,13 @@ describe("loginPageReducer test", () => {
       const action = { type: "UPDATE_EMAIL", value: "foo" };
       expect(loginPageReducer({}, action)).toEqual(expected);
     });
+
+    it("sets the error", () => {
+      const expected = {
+        error: "foo"
+      };
+      const action = { type: "SET_LOGIN_ERROR", value: "foo" };
+      expect(loginPageReducer({}, action)).toEqual(expected);
+    });
   });
 });

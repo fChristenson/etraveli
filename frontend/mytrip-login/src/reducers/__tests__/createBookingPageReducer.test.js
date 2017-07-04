@@ -20,5 +20,13 @@ describe("createBookingPageReducer test", () => {
       const action = { type: "UPDATE_BOOKING_NUMBER", value: "foo" };
       expect(createBookingPageReducer({}, action)).toEqual(expected);
     });
+
+    it("sets the server message", () => {
+      const expected = {
+        message: "foo"
+      };
+      const action = { type: "SET_SERVER_MESSAGE", value: "foo" };
+      expect(createBookingPageReducer({}, action)).toEqual(expected);
+    });
   });
 });

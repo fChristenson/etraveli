@@ -4,8 +4,7 @@ import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 import reducers from "../reducers";
 import HomePage from "./homePage";
-import LoginPage from "./loginPage";
-import loginPageWithRPC from "../containers/loginPageWithRPC";
+import LoginPageWithRPC from "../containers/loginPageWithRPC";
 import CreateBookingPageContainer
   from "../containers/createBookingPageContainer";
 import MyTripPage from "./myTripPage";
@@ -43,7 +42,6 @@ export default class App extends Component {
   }
 
   render() {
-    const LoginPageWithRPC = loginPageWithRPC(LoginPage);
     return (
       <Provider store={store}>
         <BrowserRouter>

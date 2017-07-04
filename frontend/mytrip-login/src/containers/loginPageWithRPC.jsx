@@ -1,7 +1,13 @@
-import React, { Component } from "react";
 import { eitherFunctionOrNot } from "../../utils/generalUtils";
 import { isAuthenticated, markSessionAsAuthenticated } from "../utils/authUtil";
 import * as myTripAPI from "../services/myTripAPI";
+import { connect } from "react-redux";
+import {
+  setLoginError,
+  updateEmail,
+  updateBookingNumber
+} from "../actions/loginPageActions";
+import LoginPage from "../components/loginPage";
 
 function persistJWT(data) {
   if (data.jwt !== null) {
@@ -10,37 +16,43 @@ function persistJWT(data) {
   return data;
 }
 
-export default function loginPageWithRPC(LoginPage) {
-  return class extends Component {
-    constructor(props) {
-      super(props);
-      this.handleLogin = this.handleLogin.bind(this);
-      this.state = {
-        error: null
-      };
-    }
+const handleLogin = dispatch => (email, bookingNumber) => {
+  //const onLogin = this.props.onLogin;
+  dispatch(setLoginError({}));
 
-    handleLogin(email, bookingNumber) {
-      const onLogin = this.props.onLogin;
-      this.setState({ error: null });
+  myTripAPI
+    .login(email, bookingNumber)
+    .then(persistJWT)
+    /*.then(() =>
+      eitherFunctionOrNot(onLogin).fold(
+        () => {},
+        () => onLogin(isAuthenticated())
+      )
+    )*/
+    .catch(e => {
+      console.error(e);
+      dispatch(setLoginError(e));
+    });
+};
 
-      myTripAPI
-        .login(email, bookingNumber)
-        .then(persistJWT)
-        .then(() =>
-          eitherFunctionOrNot(onLogin).fold(
-            () => {},
-            () => onLogin(isAuthenticated())
-          )
-        )
-        .catch(e => {
-          console.error(e);
-          this.setState({ error: e });
-        });
-    }
+const onEmailChange = dispatch => e => {
+  return dispatch(updateEmail(e.target.value));
+};
 
-    render() {
-      return <LoginPage error={this.state.error} onLogin={this.handleLogin} />;
-    }
+const onBookingNumberChange = dispatch => e => {
+  return dispatch(updateBookingNumber(e.target.value));
+};
+
+const stateToProps = state => {
+  return Object.assign({}, state.loginPageReducer);
+};
+
+const dispatchToProps = dispatch => {
+  return {
+    onLogin: handleLogin(dispatch),
+    onEmailChange: onEmailChange(dispatch),
+    onBookingNumberChange: onBookingNumberChange(dispatch)
   };
-}
+};
+
+export default connect(stateToProps, dispatchToProps)(LoginPage);

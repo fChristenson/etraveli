@@ -1,19 +1,17 @@
-import { Left, Right } from '../../utils/generalUtils';
+import { Left, Right } from "../../utils/generalUtils";
 
 const defaultConfig = {
-  credentials: 'same-origin',
+  credentials: "same-origin",
   headers: {
-    'Content-Type': 'application/json',
-  },
+    "Content-Type": "application/json"
+  }
 };
 
 const successfulResponse = response =>
-  (response.status >= 200 && response.status < 300);
+  response.status >= 200 && response.status < 300;
 
 const eitherSuccessOrFail = response =>
-  successfulResponse(response)
-    ? Right(response)
-    : Left(response);
+  (successfulResponse(response) ? Right(response) : Left(response));
 
 const handleError = response => {
   const error = new Error(`HTTP Error ${response.statusText}`);
@@ -23,20 +21,31 @@ const handleError = response => {
 };
 
 const checkStatus = response =>
-  eitherSuccessOrFail(response)
-    .fold(
-      () => handleError(response),
-      () => response
-    );
+  eitherSuccessOrFail(response).fold(
+    () => handleError(response),
+    () => response
+  );
 
-const parseJSON = response =>
-  response.json();
+const parseJSON = response => response.json();
 
 export const login = (email, bookingNumber) =>
-  fetch('/login',
+  fetch(
+    "/login",
     Object.assign({}, defaultConfig, {
-      method: 'POST',
-      body: JSON.stringify({ email, bookingNumber }),
+      method: "POST",
+      body: JSON.stringify({ email, bookingNumber })
     })
-  ).then(checkStatus)
-   .then(parseJSON);
+  )
+    .then(checkStatus)
+    .then(parseJSON);
+
+export const createBooking = bookingNumber =>
+  fetch(
+    "/create",
+    Object.assign({}, defaultConfig, {
+      method: "POST",
+      body: JSON.stringify({ bookingNumber })
+    })
+  )
+    .then(checkStatus)
+    .then(parseJSON);

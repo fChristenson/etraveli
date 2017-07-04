@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { eitherFunctionOrNot } from '../../utils/generalUtils';
 
 export default class LoginPage extends Component {
+  static propTypes = {
+    error: React.PropTypes.object,
+    inLogin: React.PropTypes.func
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -63,6 +68,7 @@ export default class LoginPage extends Component {
             Login
           </button>
         </div>
+        { this.props.error && <div className="mytrip-content__error">{this.props.error.message}</div>}
       </form>
     );
   }

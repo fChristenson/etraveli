@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { eitherFunctionOrNot } from '../../utils/generalUtils';
-import { isAuthenticated, markSessionAsAuthenticated } from '../utils/authUtil';
-import * as myTripAPI from '../services/myTripAPI';
+import React, { Component } from "react";
+import { eitherFunctionOrNot } from "../../utils/generalUtils";
+import { isAuthenticated, markSessionAsAuthenticated } from "../utils/authUtil";
+import * as myTripAPI from "../services/myTripAPI";
 
 function persistJWT(data) {
   if (data.jwt !== null) {
@@ -15,24 +15,32 @@ export default function loginPageWithRPC(LoginPage) {
     constructor(props) {
       super(props);
       this.handleLogin = this.handleLogin.bind(this);
+      this.state = {
+        error: null
+      };
     }
 
     handleLogin(email, bookingNumber) {
       const onLogin = this.props.onLogin;
-      myTripAPI.login(email, bookingNumber)
+      this.setState({ error: null });
+
+      myTripAPI
+        .login(email, bookingNumber)
         .then(persistJWT)
         .then(() =>
-          eitherFunctionOrNot(onLogin)
-            .fold(
-              () => {},
-              () => onLogin(isAuthenticated())
-            )
+          eitherFunctionOrNot(onLogin).fold(
+            () => {},
+            () => onLogin(isAuthenticated())
+          )
         )
-        .catch(e => console.error(e));
+        .catch(e => {
+          console.error(e);
+          this.setState({ error: e });
+        });
     }
 
     render() {
-      return <LoginPage onLogin={this.handleLogin} />;
+      return <LoginPage error={this.state.error} onLogin={this.handleLogin} />;
     }
   };
 }

@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import { eitherFunctionOrNot } from '../../utils/generalUtils';
+import React, { Component } from "react";
+import { eitherFunctionOrNot } from "../../utils/generalUtils";
+import * as actions from "../actions/createBookingPageActions";
 
 export default class LoginPage extends Component {
   static propTypes = {
     error: React.PropTypes.object,
     inLogin: React.PropTypes.func
-  }
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      bookingNumber: '',
+      email: "",
+      bookingNumber: ""
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,11 +23,10 @@ export default class LoginPage extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const onLogin = this.props.onLogin;
-    eitherFunctionOrNot(onLogin)
-      .fold(
-        () => {},
-        () => onLogin(this.state.email, this.state.bookingNumber)
-      );
+    eitherFunctionOrNot(onLogin).fold(
+      () => {},
+      () => onLogin(this.state.email, this.state.bookingNumber)
+    );
   }
 
   handleEmailChange(event) {
@@ -39,10 +39,7 @@ export default class LoginPage extends Component {
 
   render() {
     return (
-      <form
-        onSubmit={this.handleSubmit}
-        className="mytrip-content__login-form"
-      >
+      <form onSubmit={this.handleSubmit} className="mytrip-content__login-form">
         <div className="mytrip-content__login-form-row">
           <label htmlFor="email">Email:</label>
           <input
@@ -68,7 +65,10 @@ export default class LoginPage extends Component {
             Login
           </button>
         </div>
-        { this.props.error && <div className="mytrip-content__error">{this.props.error.message}</div>}
+        {this.props.error &&
+          <div className="mytrip-content__error">
+            {this.props.error.message}
+          </div>}
       </form>
     );
   }

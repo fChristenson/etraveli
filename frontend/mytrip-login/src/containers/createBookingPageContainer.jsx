@@ -6,6 +6,10 @@ import {
 import * as myTripAPI from "../services/myTripAPI";
 import CreateBookingPage from "../components/createBookingPage";
 
+const mapStateToProps = state => {
+  return Object.assign({}, state.createBookingPageReducer);
+};
+
 const handleCreateBooking = dispatch => bookingNumber => {
   myTripAPI
     .createBooking(bookingNumber)
@@ -24,4 +28,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(CreateBookingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateBookingPage);

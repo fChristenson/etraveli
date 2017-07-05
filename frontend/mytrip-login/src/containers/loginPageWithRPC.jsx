@@ -1,4 +1,3 @@
-import { eitherFunctionOrNot } from "../../utils/generalUtils";
 import { isAuthenticated, markSessionAsAuthenticated } from "../utils/authUtil";
 import * as myTripAPI from "../services/myTripAPI";
 import { connect } from "react-redux";
@@ -7,6 +6,7 @@ import {
   updateEmail,
   updateBookingNumber
 } from "../actions/loginPageActions";
+import { setAuthentication } from "../actions/appActions";
 import LoginPage from "../components/loginPage";
 
 function persistJWT(data) {
@@ -17,18 +17,11 @@ function persistJWT(data) {
 }
 
 const handleLogin = dispatch => (email, bookingNumber) => {
-  //const onLogin = this.props.onLogin;
   dispatch(setLoginError({}));
-
   myTripAPI
     .login(email, bookingNumber)
     .then(persistJWT)
-    /*.then(() =>
-      eitherFunctionOrNot(onLogin).fold(
-        () => {},
-        () => onLogin(isAuthenticated())
-      )
-    )*/
+    .then(() => dispatch(setAuthentication(isAuthenticated())))
     .catch(e => {
       console.error(e);
       dispatch(setLoginError(e));

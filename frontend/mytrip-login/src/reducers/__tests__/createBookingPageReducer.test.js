@@ -8,7 +8,8 @@ describe("createBookingPageReducer test", () => {
   describe("createBookingPageReducer", () => {
     it("returns a init state", () => {
       const expected = {
-        bookingNumber: ""
+        email: "",
+        message: ""
       };
       expect(createBookingPageReducer()).toEqual(expected);
     });
@@ -17,7 +18,10 @@ describe("createBookingPageReducer test", () => {
       const expected = {
         email: "foo"
       };
-      const action = { type: "UPDATE_EMAIL", value: "foo" };
+      const action = {
+        type: "createBookingPageActions.updateEmail",
+        value: "foo"
+      };
       expect(createBookingPageReducer({}, action)).toEqual(expected);
     });
 
@@ -25,7 +29,10 @@ describe("createBookingPageReducer test", () => {
       const expected = {
         message: "foo"
       };
-      const action = { type: "SET_SERVER_MESSAGE", value: "foo" };
+      const action = {
+        type: "createBookingPageActions.setServerMessage",
+        value: "foo"
+      };
       expect(createBookingPageReducer({}, action)).toEqual(expected);
     });
   });

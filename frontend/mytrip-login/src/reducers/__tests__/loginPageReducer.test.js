@@ -9,7 +9,8 @@ describe("loginPageReducer test", () => {
     it("returns a init state", () => {
       const expected = {
         bookingNumber: "",
-        email: ""
+        email: "",
+        error: {}
       };
       expect(loginPageReducer()).toEqual(expected);
     });
@@ -18,7 +19,10 @@ describe("loginPageReducer test", () => {
       const expected = {
         bookingNumber: "foo"
       };
-      const action = { type: "UPDATE_BOOKING_NUMBER", value: "foo" };
+      const action = {
+        type: "loginPageActions.updateBookingNumber",
+        value: "foo"
+      };
       expect(loginPageReducer({}, action)).toEqual(expected);
     });
 
@@ -26,7 +30,7 @@ describe("loginPageReducer test", () => {
       const expected = {
         email: "foo"
       };
-      const action = { type: "UPDATE_EMAIL", value: "foo" };
+      const action = { type: "loginPageActions.updateEmail", value: "foo" };
       expect(loginPageReducer({}, action)).toEqual(expected);
     });
 
@@ -34,7 +38,7 @@ describe("loginPageReducer test", () => {
       const expected = {
         error: "foo"
       };
-      const action = { type: "SET_LOGIN_ERROR", value: "foo" };
+      const action = { type: "loginPageActions.setLoginError", value: "foo" };
       expect(loginPageReducer({}, action)).toEqual(expected);
     });
   });

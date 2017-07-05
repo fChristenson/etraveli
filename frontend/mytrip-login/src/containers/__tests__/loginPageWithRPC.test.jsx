@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import LoginPageWithRPC from "../loginPageWithRPC";
 import LoginPage from "../../components/loginPage";
 import { Provider } from "react-redux";

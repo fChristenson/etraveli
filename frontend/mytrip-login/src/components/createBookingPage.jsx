@@ -4,7 +4,7 @@ import { eitherFunctionOrNot } from "../../utils/generalUtils";
 export default class CreateBookingPage extends Component {
   static propTypes = {
     error: React.PropTypes.object,
-    bookingNumber: React.PropTypes.string,
+    email: React.PropTypes.string,
     onCreateBooking: React.PropTypes.func,
     onChange: React.PropTypes.func,
     message: React.PropTypes.string
@@ -20,7 +20,7 @@ export default class CreateBookingPage extends Component {
     const onCreateBooking = this.props.onCreateBooking;
     eitherFunctionOrNot(onCreateBooking).fold(
       () => {},
-      () => onCreateBooking(this.props.bookingNumber)
+      () => onCreateBooking(this.props.email)
     );
   }
 
@@ -28,12 +28,12 @@ export default class CreateBookingPage extends Component {
     return (
       <form onSubmit={this.handleSubmit} className="mytrip-content__login-form">
         <div className="mytrip-content__login-form-row">
-          <label htmlFor="bookingNumber">Booking number:</label>
+          <label htmlFor="email">Email:</label>
           <input
             className="mytrip-content__login-form-input-field"
-            name="bookingNumber"
+            name="email"
             type="text"
-            value={this.props.bookingNumber}
+            value={this.props.email}
             onChange={this.props.onChange}
           />
         </div>

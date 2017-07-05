@@ -26,6 +26,7 @@ module.exports = {
     );
   },
   createBooking(request, response) {
-    response.json({ msg: "Booking made!" });
+    const number = Math.floor(Math.random() * 1000);
+    response.json({ msg: `Your booking number is: ${number}` });
   }
 };

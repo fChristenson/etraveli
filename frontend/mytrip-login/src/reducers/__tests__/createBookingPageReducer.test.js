@@ -15,9 +15,9 @@ describe("createBookingPageReducer test", () => {
 
     it("sets the bookingNumber", () => {
       const expected = {
-        bookingNumber: "foo"
+        email: "foo"
       };
-      const action = { type: "UPDATE_BOOKING_NUMBER", value: "foo" };
+      const action = { type: "UPDATE_EMAIL", value: "foo" };
       expect(createBookingPageReducer({}, action)).toEqual(expected);
     });
 

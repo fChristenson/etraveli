@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import {
-  updateBookingNumber,
+  updateEmail,
   setServerMessage
 } from "../actions/createBookingPageActions";
 import * as myTripAPI from "../services/myTripAPI";
@@ -10,9 +10,9 @@ const mapStateToProps = state => {
   return Object.assign({}, state.createBookingPageReducer);
 };
 
-const handleCreateBooking = dispatch => bookingNumber => {
+const handleCreateBooking = dispatch => email => {
   myTripAPI
-    .createBooking(bookingNumber)
+    .createBooking(email)
     .then(response => {
       return dispatch(setServerMessage(response.msg));
     })
@@ -23,7 +23,7 @@ const handleCreateBooking = dispatch => bookingNumber => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onChange: e => dispatch(updateBookingNumber(e.target.value)),
+    onChange: e => dispatch(updateEmail(e.target.value)),
     onCreateBooking: handleCreateBooking(dispatch)
   };
 };

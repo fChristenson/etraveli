@@ -1,11 +1,10 @@
-export const UPDATE_BOOKING_NUMBER =
-  "createBookingPageActions.updateBookingNumber";
+export const UPDATE_EMAIL = "createBookingPageActions.updateEmail";
 
 export const SET_SERVER_MESSAGE = "createBookingPageActions.setServerMessage";
 
-export const updateBookingNumber = value => {
+export const updateEmail = value => {
   return {
-    type: UPDATE_BOOKING_NUMBER,
+    type: UPDATE_EMAIL,
     value
   };
 };

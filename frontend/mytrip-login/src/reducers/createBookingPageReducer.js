@@ -1,10 +1,10 @@
 import {
-  UPDATE_BOOKING_NUMBER,
+  UPDATE_EMAIL,
   SET_SERVER_MESSAGE
 } from "../actions/createBookingPageActions";
 
 const initState = {
-  bookingNumber: "",
+  email: "",
   message: ""
 };
 
@@ -13,8 +13,8 @@ const createBookingReducer = (state = initState, action = {}) => {
     case SET_SERVER_MESSAGE:
       return Object.assign({}, state, { message: action.value });
 
-    case UPDATE_BOOKING_NUMBER:
-      return Object.assign({}, state, { bookingNumber: action.value });
+    case UPDATE_EMAIL:
+      return Object.assign({}, state, { email: action.value });
 
     default:
       return state;
